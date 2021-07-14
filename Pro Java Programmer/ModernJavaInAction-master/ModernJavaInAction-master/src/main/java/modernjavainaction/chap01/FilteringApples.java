@@ -2,7 +2,9 @@ package modernjavainaction.chap01;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -23,12 +25,37 @@ public class FilteringApples {
                 new Movie("Enemy at the gates", "History"));
 
         System.out.println("=================================================");
+        Function<Integer, Integer> f = x -> x + 1;
+        Function<Integer, Integer> g = x -> x * 2;
+        Function<Integer, Integer> h = f.andThen(g);
+        int result = h.apply(1);
+        System.out.println(result);
+
+        System.out.println("=================================================");
+        Function<Integer, Integer> f2 = x -> x + 1;
+        Function<Integer, Integer> g2 = x -> x * 2;
+        Function<Integer, Integer> h2 = f.compose(g);
+        int result2 = h2.apply(1);
+        System.out.println(result2);
+
+        System.out.println("=================================================");
+        inventory.sort(Comparator.comparing(Apple::getWeight).reversed()
+                            .thenComparing(Apple::getColor));
+        System.out.println(inventory);
+
+        System.out.println("=================================================");
+        inventory.sort(Comparator.comparing(Apple::getWeight).reversed());
+        System.out.println(inventory);
+
+        System.out.println("=================================================");
         genericFilterDemo(inventory, myFavMovies);
+
         System.out.println("=================================================");
-        //parallelStreamDemo(myFavMovies);
-        //printMovies(myFavMovies);
+        parallelStreamDemo(myFavMovies);
+        printMovies(myFavMovies);
+
         System.out.println("=================================================");
-        //printApples(inventory);
+        printApples(inventory);
 
     }
 

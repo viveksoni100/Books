@@ -1,16 +1,19 @@
 package modernjavainaction.chap04;
 
+import java.util.*;
+import java.util.stream.Stream;
+
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 public class StreamBasic {
 
   public static void main(String... args) {
+
+    List<String> title = Arrays.asList("Modern", "Java", "In", "Action");
+    Stream<String> s = title.stream();
+    s.forEach(System.out::println);
+
     // Java 7
     getLowCaloricDishesNamesInJava7(Dish.menu).forEach(System.out::println);
 
@@ -18,6 +21,7 @@ public class StreamBasic {
 
     // Java 8
     getLowCaloricDishesNamesInJava8(Dish.menu).forEach(System.out::println);
+    getDishObjectsInJava8(Dish.menu).forEach(System.out::println);
   }
 
   public static List<String> getLowCaloricDishesNamesInJava7(List<Dish> dishes) {
@@ -38,6 +42,13 @@ public class StreamBasic {
       lowCaloricDishesName.add(d.getName());
     }
     return lowCaloricDishesName;
+  }
+
+  public static List<Dish> getDishObjectsInJava8(List<Dish> dishes) {
+    return dishes.stream()
+            .filter(d -> d.getCalories() < 400)
+            .sorted(comparing(Dish::getCalories))
+            .collect(toList());
   }
 
   public static List<String> getLowCaloricDishesNamesInJava8(List<Dish> dishes) {

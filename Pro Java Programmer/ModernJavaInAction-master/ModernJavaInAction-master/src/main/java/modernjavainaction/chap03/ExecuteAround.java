@@ -1,12 +1,14 @@
 package modernjavainaction.chap03;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.function.Function;
 
 public class ExecuteAround {
 
-  private static final String FILE = ExecuteAround.class.getResource("./data.txt").getFile();
+  private static final File FILE = new File("/home/viveksoni100/GIT_REPO/Books/Pro Java Programmer/ModernJavaInAction-master/ModernJavaInAction-master/src/main/java/modernjavainaction/chap03/data.txt");
 
   public static void main(String... args) throws IOException {
     // method we want to refactor to make more flexible
@@ -34,10 +36,21 @@ public class ExecuteAround {
     }
   }
 
+  @FunctionalInterface
   public interface BufferedReaderProcessor {
 
     String process(BufferedReader b) throws IOException;
 
   }
+
+  /*this is how we catch exception in lambda syntax*/
+  Function<BufferedReader, String> f =
+          (BufferedReader b) -> {
+            try {
+              return b.readLine();
+            } catch (IOException e) {
+              throw new RuntimeException(e);
+            }
+          };
 
 }

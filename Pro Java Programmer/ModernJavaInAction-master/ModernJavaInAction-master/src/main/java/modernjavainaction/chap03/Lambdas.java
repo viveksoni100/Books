@@ -19,6 +19,17 @@ public class Lambdas {
         new Apple(120, Color.RED)
     );
 
+    System.out.println("*************************************");
+    List<Integer> integers = Arrays.asList(3, 9, 7, 0, 10, 20);
+    integers.forEach(i -> {
+      try {
+        System.out.println(50 / i);
+      } catch (ArithmeticException e) {
+        System.err.println(
+                "Arithmetic Exception occured : " + e.getMessage());
+      }
+    });
+
     // [Apple{color=GREEN, weight=80}, Apple{color=GREEN, weight=155}]
     List<Apple> greenApples = filter(inventory, (Apple a) -> a.getColor() == Color.GREEN);
     System.out.println(greenApples);
